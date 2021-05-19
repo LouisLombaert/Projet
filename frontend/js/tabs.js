@@ -108,3 +108,54 @@ function ajouterVille(form){
 	afficherVilles();
 	}
 }
+function afficherPersonnes(){
+	let xhr = new XMLHttpRequest();
+	xhr.open('get', 'http://localhost:622/afficherPersonnes', true);
+	xhr.onload = function recupererPersonne(){
+		let reponse = JSON.parse(xhr.responseText);
+		let str = '';
+		for(let i in reponse){
+			let positif;
+			console.log(String(reponse[i].expiration));
+			let date = new Date(String(reponse[i].expiration))
+			if(reponse[i].resultat == "positif" && date >= new Date()){
+				positif = true;
+			}
+			else{
+				positif = false;
+			}
+			if(positif){
+				str += "<tr><td>" + reponse[i].id + "</td><td>" + reponse[i].prenom + "</td><td>" + reponse[i].nom + "</td><td>" + reponse[i].dateNaiss + "</td><td id=\"reultatTest\" style=\"color: red;\">oui</td></tr>";
+			}
+			else {
+				str += "<tr><td>" + reponse[i].id + "</td><td>" + reponse[i].prenom + "</td><td>" + reponse[i].nom + "</td><td>" + reponse[i].dateNaiss + "</td><td>non</td></tr>";
+			}
+		};
+		document.getElementById("tbodyPersonnes").innerHTML = str;
+		document.getElementById("resultatTest").style.fontWeight = bold;
+	};
+	xhr.send();
+}
+afficherPersonnes();
+
+function ajouterPesronne(form){
+	let nom = form.nomPersonne.value;
+	let prenom = form.prenomPersonne.value;
+	let dateNaiss = form.dateNaissance.value;
+	let sexe = form.sexePersonne.value;
+	if(nom.length > 30){
+		console.log("attention, le nom doit contenir maximum 30 caractères !");
+	}
+	else if(nom.length > 30){
+		console.log("attention, le prenom doit contenir maximum 30 caractères !");
+	}
+	else{
+		let xhr = new XMLHttpRequest();
+		xhr.open('get', 'http://localhost:622/enregistrezPersonne?nom='+nom+'&prenom='+prenom+'&dateNaiss='+dateNaiss+'&sexe='+sexe, true);
+		xhr.onload = function fonctionEnregistrerPersonne(){
+			console.log("Personne enregistrée");
+		};
+	xhr.send();
+	afficherPersonnes();
+	}
+}
