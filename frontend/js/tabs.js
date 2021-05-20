@@ -159,3 +159,10 @@ function ajouterPesronne(form){
 	afficherPersonnes();
 	}
 }
+function ajouterTestCovid(form){
+	document.getElementById("personneTestCovid") = //"<option value=" + idPersonne + ">"+ ... (ajouter les ids des personnes dans chaque option )
+	let personne = form.personneTestCovid.value;
+	let result = form.resultatTestCovid.value;
+	let dateTest = form.dateTestCovid.value;
+	let dateExp = form.dateExpirationTestCovid.value;
+}
