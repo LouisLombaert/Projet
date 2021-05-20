@@ -165,4 +165,11 @@ function ajouterTestCovid(form){
 	let result = form.resultatTestCovid.value;
 	let dateTest = form.dateTestCovid.value;
 	let dateExp = form.dateExpirationTestCovid.value;
+	let xhr = new XMLHttpRequest();
+	xhr.open('get', 'http://localhost:622/ajouterTest?pers=' + personne + '&resultat=' + result + '&dateTest=' + dateTest + '&expiration=' + dateExp, true);
+	xhr.onload = function fonctionCallback(){
+		console.log("test enregistré");
+	};
+	xhr.send();
+
 }
